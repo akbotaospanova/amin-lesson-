@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Аминдердің жіктелуі және номенклатурасы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Зертхана дәптері: азот-көк акцент (CPK түстері), салқын қағаз фоны, бір бағанды оқу ағыны + модель панелі */
+  --paper:#f4f6fa;
+  --card:#ffffff;
+  --ink:#16203a;
+  --muted:#5a6684;
+  --line:#d6dcea;
+  --accent:#2f56d0;
+  --accent-soft:#e4eaff;
+  --ok:#1f8a4c; --ok-soft:#e2f4ea;
+  --bad:#c23b2e; --bad-soft:#fbe6e3;
+  --warn:#b7791f;
+  --font-display:"Unbounded","Golos Text",system-ui,sans-serif;
+  --font-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0f1424; --card:#171e33; --ink:#e6eaf5; --muted:#9aa5c4; --line:#2a3452;
+    --accent:#7c9bff; --accent-soft:#1f2a4d; --ok:#4cc483; --ok-soft:#14301f; --bad:#ff7b6e; --bad-soft:#3a1b18; --warn:#e3b04b;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0f1424; --card:#171e33; --ink:#e6eaf5; --muted:#9aa5c4; --line:#2a3452;
+  --accent:#7c9bff; --accent-soft:#1f2a4d; --ok:#4cc483; --ok-soft:#14301f; --bad:#ff7b6e; --bad-soft:#3a1b18; --warn:#e3b04b;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--font-body)}
+h1,h2,h3{font-family:var(--font-display);line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700}
+h2{font-size:clamp(1.25rem,2.6vw,1.6rem);font-weight:700}
+h3{font-size:1.05rem;font-weight:500}
+p{margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+nav.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px}
+nav.top a{flex:none;text-decoration:none;color:var(--muted);font-weight:600;font-size:.9rem;padding:6px 12px;border-radius:999px}
+nav.top a:hover,nav.top a:focus-visible{color:var(--accent);background:var(--accent-soft)}
+header.hero{padding:40px 0 28px}
+.eyebrow{font-size:.85rem;font-weight:600;color:var(--accent);letter-spacing:.02em;margin-bottom:10px}
+.hero .sub{color:var(--muted);margin-top:12px;max-width:62ch}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:22px}
+.goal{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.goal b{font-family:var(--font-display);font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums}
+section{padding:34px 0;border-top:1px solid var(--line);scroll-margin-top:56px}
+.sec-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.tag{font-size:.78rem;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.lead{color:var(--muted);max-width:68ch;margin-bottom:18px}
+.problem{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:18px;display:grid;gap:10px;margin-top:22px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;align-content:start}
+.box ul{margin:0;padding-left:18px}
+.f{font-family:"Golos Text",monospace;font-weight:600;white-space:nowrap}
+.n{color:var(--accent);font-weight:700}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:.85rem;color:var(--muted);font-weight:600;background:color-mix(in srgb,var(--accent-soft) 45%,var(--card))}
+tr:last-child td{border-bottom:0}
+select{font:inherit;font-size:.92rem;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:6px 8px;max-width:100%}
+select.right{border-color:var(--ok);background:var(--ok-soft)}
+select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+select:focus-visible,button:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+button{font:inherit;font-weight:600;border-radius:10px;padding:9px 16px;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] button.primary{color:#0f1424}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button.primary{color:#0f1424}}
+button:hover{filter:brightness(1.06)}
+.result{font-weight:600}
+.result.good{color:var(--ok)} .result.mid{color:var(--warn)} .result.low{color:var(--bad)}
+.lab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:16px;align-items:start}
+@media (max-width:820px){.lab{grid-template-columns:1fr}}
+.viewer{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:10px}
+.mol-pick{display:flex;flex-wrap:wrap;gap:6px}
+.mol-pick button{padding:6px 10px;font-size:.9rem}
+.mol-pick button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+canvas{width:100%;height:300px;display:block;border-radius:10px;background:radial-gradient(circle at 50% 40%,var(--accent-soft),transparent 70%);touch-action:none;cursor:grab}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:5px;border:1px solid var(--line)}
+.info{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem}
+.info dt{color:var(--muted)} .info dd{margin:0;font-weight:600}
+ol.steps{margin:0;padding-left:20px;display:grid;gap:6px}
+.order{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.order button{font-family:"Golos Text",sans-serif}
+.order button[disabled]{opacity:.4;cursor:default}
+.seq{min-height:44px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;border:1px dashed var(--line);border-radius:10px;margin-top:10px;background:var(--card)}
+.chip{padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.lt{color:var(--muted)}
+.iso{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.iso .box{gap:8px}
+.iso .row{display:flex;gap:8px;flex-wrap:wrap}
+.reveal{background:var(--accent-soft);border-radius:10px;padding:12px 14px;display:none}
+.reveal.show{display:block}
+.ebbk{border:2px solid var(--accent);border-radius:14px;padding:18px;background:var(--card);display:grid;gap:14px;font-size:1.08rem}
+.ebbk .f{font-size:1.2rem}
+.match{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.lights{display:flex;gap:10px;flex-wrap:wrap}
+.light{display:flex;align-items:center;gap:8px}
+.light[aria-pressed="true"]{border-color:var(--ink)}
+.lamp{width:14px;height:14px;border-radius:50%}
+textarea{width:100%;min-height:70px;font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px;resize:vertical}
+.refl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+label{font-weight:600;display:block;margin-bottom:6px}
+footer{padding:28px 0 40px;color:var(--muted);font-size:.88rem;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<nav class="top" aria-label="Сабақ бөлімдері"><div class="wrap">
+  <a href="#theory">Теория</a><a href="#task1">1-тапсырма</a><a href="#task2">2-тапсырма · Зертхана</a><a href="#task3">3-тапсырма</a><a href="#ebbk">ЕББҚ</a><a href="#reflection">Рефлексия</a><a href="#homework">Үй тапсырмасы</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Химия · 11-сынып (ЖМБ) · Азотқұрамды органикалық қосылыстар</div>
+  <h1>Аминдердің жіктелуі және номенклатурасы</h1>
+  <p class="sub">№3 зертханалық тәжірибе: «Аммиак және аминдер молекуласының модельдерін құрастыру». Оқулық: М.Қ. Оспанова, Қ.С. Аухадиева, Т.Г. Белоусова, «Мектеп», 2019.</p>
+  <div class="goals">
+    <div class="goal"><b>11.5.1.1</b> Аминдердің жіктелуін және номенклатурасын атау</div>
+    <div class="goal"><b>11.5.1.2</b> Аммиак және аминдер құрылымын салыстыру</div>
+  </div>
+  <div class="problem">
+    <h3>Проблемалық сұрақ</h3>
+    <p>Балық неге жағымсыз иіс шығарады? Аспазшылар неге оған лимон шырынын құяды?</p>
+    <div><button type="button" id="probBtn" aria-expanded="false" aria-controls="probAns">Жауабын көру</button></div>
+    <div class="reveal" id="probAns">Балықтың иісін негізінен <span class="f">(CH₃)₃N</span> триметиламин береді. Ол аммиак сияқты негіз, сондықтан лимон қышқылымен әрекеттесіп, иіссіз тұз түзеді: <span class="f">(CH₃)₃N + H⁺ → [(CH₃)₃NH]⁺</span>.</div>
+  </div>
+</div></header>
+
+<main>
+<section id="theory"><div class="wrap">
+  <div class="sec-head"><h2>Аминдер дегеніміз не?</h2><span class="tag">Тірек-схема</span></div>
+  <p class="lead">Аминдер – аммиак молекуласындағы сутек атомдарын көмірсутек радикалдарына алмастырғанда түзілетін органикалық қосылыстар. Аминотоп: <span class="f">–NH₂</span>.</p>
+  <div class="grid3">
+    <div class="box"><h3>Радикал саны бойынша</h3>
+      <ul><li>Біріншілік: <span class="f">R–<span class="n">N</span>H₂</span></li><li>Екіншілік: <span class="f">R₂<span class="n">N</span>H</span></li><li>Үшіншілік: <span class="f">R₃<span class="n">N</span></span></li></ul>
+      <p class="lt">Азот атомына неше көміртек атомы тікелей байланысқанын санаңыз.</p></div>
+    <div class="box"><h3>Радикал табиғаты бойынша</h3>
+      <ul><li>Алифатты: <span class="f">CH₃–NH₂</span></li><li>Ароматты: <span class="f">C₆H₅–NH₂</span> (анилин)</li><li>Аралас: <span class="f">C₆H₅–NH–CH₃</span></li></ul></div>
+    <div class="box"><h3>Аминотоп саны бойынша</h3>
+      <ul><li>Моноаминдер: <span class="f">C₂H₅–NH₂</span></li><li>Диаминдер: <span class="f">H₂N–CH₂–CH₂–NH₂</span></li></ul></div>
+  </div>
+  <h3 style="margin:22px 0 10px">Номенклатура</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Формула</th><th>Типі</th><th>Рационалды атауы</th><th>IUPAC атауы</th></tr></thead>
+    <tbody>
+      <tr><td class="f">CH₃–NH₂</td><td>I</td><td>метиламин</td><td>метанамин</td></tr>
+      <tr><td class="f">CH₃–CH₂–CH₂–NH₂</td><td>I</td><td>пропиламин</td><td>пропан-1-амин</td></tr>
+      <tr><td class="f">C₂H₅–NH–C₂H₅</td><td>II</td><td>диэтиламин</td><td>N-этилэтанамин</td></tr>
+      <tr><td class="f">(CH₃)₂N–C₂H₅</td><td>III</td><td>диметилэтиламин</td><td>N,N-диметилэтанамин</td></tr>
+    </tbody></table></div>
+  <p class="lt" style="margin-top:10px">Рационалды: радикалдар атауы + «амин». IUPAC: ең ұзын тізбектің көмірсутек атауы + «-амин», аминотоптың орны цифрмен, азоттағы орынбасар «N-» әрпімен беріледі.</p>
+</div></section>
+
+<section id="task1"><div class="wrap">
+  <div class="sec-head"><h2>1-тапсырма. «Жікте де, атау бер!»</h2><span class="tag">Жеке жұмыс</span></div>
+  <p class="lead">Әр аминнің типін, радикал табиғатын анықтап, IUPAC атауын таңдаңыз. Содан кейін «Тексеру» батырмасын басыңыз.</p>
+  <div class="tbl-wrap"><table id="t1"><thead><tr><th>№</th><th>Формула</th><th>Типі</th><th>Радикал</th><th>IUPAC атауы</th></tr></thead><tbody></tbody></table></div>
+  <div class="btns"><button class="primary" type="button" id="t1check">Тексеру</button><button type="button" id="t1show">Жауаптарды көрсету</button><button type="button" id="t1reset">Тазалау</button><span class="result" id="t1res" aria-live="polite"></span></div>
+</div></section>
+
+<section id="task2"><div class="wrap">
+  <div class="sec-head"><h2>2-тапсырма. №3 зертханалық тәжірибе</h2><span class="tag">Жұптық жұмыс</span></div>
+  <p class="lead">Аммиак және аминдер молекуласының модельдерін құрастырып, құрылысын салыстырыңыз. Модельді тышқанмен немесе саусақпен айналдыруға болады.</p>
+  <div class="lab">
+    <div class="box">
+      <h3>Құрал-жабдық</h3>
+      <p>Шар-стерженді модель жиынтығы немесе пластилин (көк, қара, ақ) мен шпажкалар.</p>
+      <h3>Қауіпсіздік</h3>
+      <p>Шпажканың үшкір ұшымен абай болыңыз, бөлшектерді ауызға салмаңыз, жұмыс орнын таза ұстаңыз.</p>
+      <h3>Жұмыс барысы</h3>
+      <ol class="steps">
+        <li>Көк шар (N) алып, оған 3 ақ шар (H) жалғаңыз. NH₃ дайын.</li>
+        <li>Бір H-ты қара шармен (C) алмастырып, оған 3 H жалғаңыз. CH₃NH₂ шығады.</li>
+        <li>Тағы бір H-ты метилге алмастырыңыз: (CH₃)₂NH, кейін (CH₃)₃N.</li>
+        <li>Азотқа 6 көміртекті жазық сақина жалғаңыз: C₆H₅NH₂ (анилин).</li>
+        <li>Модельдерді салыстырып, төмендегі кестені толтырыңыз.</li>
+      </ol>
+    </div>
+    <div class="viewer">
+      <div class="mol-pick" id="molPick" role="group" aria-label="Молекуланы таңдау"></div>
+      <canvas id="cv" aria-label="Молекуланың шар-стерженді моделі"></canvas>
+      <div class="legend"><span><i class="dot" style="background:#3050f8"></i>N – азот</span><span><i class="dot" style="background:#3b3f46"></i>C – көміртек</span><span><i class="dot" style="background:#f4f4f4"></i>H – сутек</span><span><i class="dot" style="background:rgba(80,120,255,.35)"></i>бөлінбеген электрон жұбы</span></div>
+      <dl class="info" id="molInfo"></dl>
+    </div>
+  </div>
+
+  <h3 style="margin:24px 0 10px">Салыстыру кестесі</h3>
+  <div class="tbl-wrap"><table id="t2"><thead><tr><th>Молекула</th><th>Азоттың гибридтенуі</th><th>Молекула пішіні (азот айналасы)</th><th>Бөлінбеген электрон жұбы</th><th>Негіздігі (NH₃-пен салыстырғанда)</th></tr></thead><tbody></tbody></table></div>
+  <div class="btns"><button class="primary" type="button" id="t2check">Тексеру</button><button type="button" id="t2show">Жауаптарды көрсету</button><span class="result" id="t2res" aria-live="polite"></span></div>
+
+  <h3 style="margin:24px 0 6px">Негіздік қатарын құрастырыңыз</h3>
+  <p class="lt">Суда ең әлсіз негізден ең күштісіне қарай ретімен басыңыз.</p>
+  <div class="order" id="ordBtns"></div>
+  <div class="seq" id="ordSeq" aria-live="polite"><span class="lt">Таңдалған реті осында шығады</span></div>
+  <div class="btns"><button class="primary" type="button" id="ordCheck">Тексеру</button><button type="button" id="ordReset">Қайта бастау</button><span class="result" id="ordRes" aria-live="polite"></span></div>
+  <div class="reveal" id="ordExpl" style="margin-top:12px">Алкил радикалдары электрон тығыздығын азотқа ығыстырады (+I әсер), сондықтан метиламин мен диметиламин аммиактан күшті негіз. Суда триметиламин диметиламиннен әлсіздеу, өйткені оның катионы сумен нашар сольваттанады. Анилинде азоттың электрон жұбы бензол сақинасымен түйіндескен (p-π түйіндесу), сондықтан ол аммиактан әлдеқайда әлсіз. pKb: анилин 9,4; NH₃ 4,75; (CH₃)₃N 4,2; CH₃NH₂ 3,4; (CH₃)₂NH 3,3.</div>
+</div></section>
+
+<section id="task3"><div class="wrap">
+  <div class="sec-head"><h2>3-тапсырма. «Изомерлер шеберханасы»</h2><span class="tag">Топтық жұмыс</span></div>
+  <p class="lead">1, 2-топ: C₃H₉N (4 изомер). 3, 4-топ: C₄H₁₁N (8 изомер). Алдымен изомерлерді дәптерге өздеріңіз құрастырыңыз, содан кейін әр құрылымның типі мен атауын таңдап, тексеріңіз.</p>
+  <div class="mol-pick" role="group" aria-label="Формуланы таңдау" id="isoPick"></div>
+  <div class="iso" id="isoGrid" style="margin-top:12px"></div>
+  <div class="btns"><button class="primary" type="button" id="isoCheck">Тексеру</button><button type="button" id="isoShow">Жауаптарды көрсету</button><span class="result" id="isoRes" aria-live="polite"></span></div>
+  <div class="problem">
+    <h3>Функционалдық сауаттылық</h3>
+    <p>Лимон шырыны балықтың иісін неге жояды? Реакция теңдеуін жазыңыз.</p>
+    <div><button type="button" id="flBtn" aria-expanded="false" aria-controls="flAns">Жауабын көру</button></div>
+    <div class="reveal" id="flAns">Үшіншілік амин <span class="f">(CH₃)₃N</span> азоттағы бөлінбеген электрон жұбы арқылы протонды қосып алады: <span class="f">(CH₃)₃N + H⁺ → [(CH₃)₃NH]⁺</span>. Түзілген тұз ұшқыш емес, сондықтан иіс жоғалады.</div>
+  </div>
+</div></section>
+
+<section id="ebbk"><div class="wrap">
+  <div class="sec-head"><h2>ЕББҚ оқушыларына арналған тапсырма</h2><span class="tag">Бейімделген</span></div>
+  <div class="ebbk">
+    <p><b>К-1. Сәйкестендір.</b> Көк <span class="n">N</span> әрпіне неше көміртек атомы жалғанғанын санаңыз да, типін таңдаңыз.</p>
+    <div class="match" id="k1"></div>
+    <div class="btns" style="margin-top:0"><button class="primary" type="button" id="k1check">Тексеру</button><span class="result" id="k1res" aria-live="polite"></span></div>
+    <p><b>Үлгі:</b> метил + амин = <b>метиламин</b>; этил + амин = <b>этиламин</b>.</p>
+    <p><b>К-2. Модель құрастыр.</b> Жоғарыдағы модельден NH₃ пен CH₃NH₂-ні қараңыз. Пластилиннен екеуін жасап, 1 ұқсастығын және 1 айырмашылығын айтыңыз.</p>
+    <p><b>К-3. Тексеруші.</b> Топтың изомерлерінде азотқа жалғанған көміртекті санап, жанына I, II немесе III деп жазыңыз.</p>
+  </div>
+</div></section>
+
+<section id="reflection"><div class="wrap">
+  <div class="sec-head"><h2>Рефлексия</h2><span class="tag">Білемін – Білдім – Білгім келеді</span></div>
+  <div class="refl">
+    <div><label for="r1">Аммиак туралы білетінмін…</label><textarea id="r1"></textarea></div>
+    <div><label for="r2">Бүгін аминдер туралы білдім…</label><textarea id="r2"></textarea></div>
+    <div><label for="r3">…туралы көбірек білгім келеді</label><textarea id="r3"></textarea></div>
+  </div>
+  <h3 style="margin:20px 0 10px">Бағдаршам: тақырыпты қалай түсіндім?</h3>
+  <div class="lights" role="group" aria-label="Бағдаршам">
+    <button type="button" class="light" data-v="g" aria-pressed="false"><span class="lamp" style="background:#2fa65a"></span>Толық түсіндім</button>
+    <button type="button" class="light" data-v="y" aria-pressed="false"><span class="lamp" style="background:#e0a92b"></span>Сұрағым бар</button>
+    <button type="button" class="light" data-v="r" aria-pressed="false"><span class="lamp" style="background:#d6453a"></span>Көмек керек</button>
+  </div>
+</div></section>
+
+<section id="homework"><div class="wrap">
+  <div class="sec-head"><h2>Үй тапсырмасы</h2></div>
+  <div class="grid3">
+    <div class="box"><h3>А деңгейі</h3><p>Оқулықтағы тақырыпты оқып, C₅H₁₃N құрамды біріншілік аминдердің 3 изомерін құрастырып, IUPAC бойынша атаңыз.</p></div>
+    <div class="box"><h3>В деңгейі</h3><p>«Аминдер медицина мен өнеркәсіпте» тақырыбында инфографика дайындаңыз (анилин, новокаин, гексаметилендиамин), дереккөзді көрсетіңіз.</p></div>
+    <div class="box"><h3>ЕББҚ</h3><p>Үлгі бойынша 3 біріншілік және 1 екіншілік аминнің формуласын жазып, атауын қойыңыз.</p></div>
+  </div>
+</div></section>
+</main>
+<footer><div class="wrap">Химия, 11-сынып (ЖМБ). Оқулық: М.Қ. Оспанова, Қ.С. Аухадиева, Т.Г. Белоусова, Алматы, «Мектеп», 2019.</div></footer>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+function praise(p){return p>=0.9?['good','Керемет!']:p>=0.7?['good','Жарайсың!']:p>=0.5?['mid','Еңбегің көрініп тұр!']:['low','Талпын!']}
+function showRes(el,ok,total){const [c,w]=praise(ok/total);el.className='result '+c;el.textContent=ok+' / '+total+' · '+w}
+function toggle(btn,box){btn.addEventListener('click',()=>{const s=box.classList.toggle('show');btn.setAttribute('aria-expanded',s);btn.textContent=s?'Жасыру':'Жауабын көру'})}
+toggle($('#probBtn'),$('#probAns'));toggle($('#flBtn'),$('#flAns'));
+function sel(id,opts){const s=document.createElement('select');s.id=id;s.innerHTML='<option value="">—</option>'+opts.map(o=>`<option>${o}</option>`).join('');return s}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+/* ---------- 1-тапсырма ---------- */
+const T1=[
+ ['CH₃–NH₂','I','қаныққан','метанамин'],
+ ['CH₃–NH–CH₃','II','қаныққан','N-метилметанамин'],
+ ['(CH₃)₃N','III','қаныққан','N,N-диметилметанамин'],
+ ['C₂H₅–NH–CH₃','II','қаныққан','N-метилэтанамин'],
+ ['CH₃–CH(NH₂)–CH₃','I','қаныққан','пропан-2-амин'],
+ ['C₆H₅–NH₂','I','ароматты','бензоламин (анилин)'],
+ ['C₆H₅–NH–CH₃','II','аралас','N-метиланилин'],
+ ['H₂N–CH₂–CH₂–NH₂','I','қаныққан','этан-1,2-диамин']];
+const names1=shuffle(T1.map(r=>r[3]));
+const tb1=$('#t1 tbody');
+T1.forEach((r,i)=>{const tr=document.createElement('tr');
+ tr.innerHTML=`<td>${i+1}</td><td class="f">${r[0]}</td><td></td><td></td><td></td>`;
+ tr.children[2].append(sel('t1a'+i,['I','II','III']));tr.children[3].append(sel('t1b'+i,['қаныққан','ароматты','аралас']));tr.children[4].append(sel('t1c'+i,names1));
+ tb1.append(tr)});
+function check(rows,prefixes,res){let ok=0,tot=0;rows.forEach((r,i)=>prefixes.forEach((p,k)=>{const s=document.getElementById(p+i);tot++;s.classList.remove('right','wrong');if(s.value===r[k+1]){ok++;s.classList.add('right')}else s.classList.add('wrong')}));showRes(res,ok,tot)}
+function fill(rows,prefixes){rows.forEach((r,i)=>prefixes.forEach((p,k)=>{const s=document.getElementById(p+i);s.value=r[k+1];s.classList.remove('wrong');s.classList.add('right')}))}
+$('#t1check').onclick=()=>check(T1,['t1a','t1b','t1c'],$('#t1res'));
+$('#t1show').onclick=()=>{fill(T1,['t1a','t1b','t1c']);$('#t1res').textContent=''};
+$('#t1reset').onclick=()=>{document.querySelectorAll('#t1 select').forEach(s=>{s.value='';s.classList.remove('right','wrong')});$('#t1res').textContent=''};
+
+/* ---------- 2-тапсырма: кесте ---------- */
+const T2=[
+ ['NH₃','sp³','тригональды пирамида','азотта шоғырланған','салыстыру эталоны'],
+ ['CH₃NH₂','sp³','тригональды пирамида','азотта шоғырланған','күштірек'],
+ ['(CH₃)₃N','sp³','тригональды пирамида','азотта шоғырланған','күштірек'],
+ ['C₆H₅NH₂','sp²-ге жақын','жазыққа жақын','бензол сақинасымен түйіндескен','әлсіз']];
+const tb2=$('#t2 tbody');
+T2.forEach((r,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td class="f">${r[0]}</td><td></td><td></td><td></td><td></td>`;
+ tr.children[1].append(sel('t2a'+i,['sp³','sp²-ге жақын','sp']));
+ tr.children[2].append(sel('t2b'+i,['тригональды пирамида','жазыққа жақын','сызықты']));
+ tr.children[3].append(sel('t2c'+i,['азотта шоғырланған','бензол сақинасымен түйіндескен','жоқ']));
+ tr.children[4].append(sel('t2d'+i,['салыстыру эталоны','күштірек','әлсіз']));tb2.append(tr)});
+$('#t2check').onclick=()=>check(T2,['t2a','t2b','t2c','t2d'],$('#t2res'));
+$('#t2show').onclick=()=>{fill(T2,['t2a','t2b','t2c','t2d']);$('#t2res').textContent=''};
+
+/* ---------- негіздік қатары ---------- */
+const ORD=['C₆H₅NH₂','NH₃','(CH₃)₃N','CH₃NH₂','(CH₃)₂NH'];let seq=[];
+const ob=$('#ordBtns');
+function drawOrd(){ob.innerHTML='';shuffledOrd.forEach(f=>{const b=document.createElement('button');b.type='button';b.textContent=f;b.disabled=seq.includes(f);b.onclick=()=>{seq.push(f);drawOrd()};ob.append(b)});
+ const s=$('#ordSeq');s.innerHTML=seq.length?seq.map(f=>`<span class="chip">${f}</span>`).join('<span class="lt">&lt;</span>'):'<span class="lt">Таңдалған реті осында шығады</span>'}
+let shuffledOrd=shuffle(ORD);drawOrd();
+$('#ordCheck').onclick=()=>{const r=$('#ordRes');if(seq.length<ORD.length){r.className='result mid';r.textContent='Барлық 5 қосылысты таңдаңыз';return}
+ let ok=seq.filter((f,i)=>f===ORD[i]).length;showRes(r,ok,ORD.length);$('#ordExpl').classList.add('show')};
+$('#ordReset').onclick=()=>{seq=[];shuffledOrd=shuffle(ORD);drawOrd();$('#ordRes').textContent=''};
+
+/* ---------- 3-тапсырма: изомерлер ---------- */
+const ISO={
+ 'C₃H₉N':[['CH₃–CH₂–CH₂–NH₂','I','пропан-1-амин'],['CH₃–CH(NH₂)–CH₃','I','пропан-2-амин'],['CH₃–CH₂–NH–CH₃','II','N-метилэтанамин'],['(CH₃)₃N','III','N,N-диметилметанамин']],
+ 'C₄H₁₁N':[['CH₃–CH₂–CH₂–CH₂–NH₂','I','бутан-1-амин'],['CH₃–CH₂–CH(NH₂)–CH₃','I','бутан-2-амин'],['(CH₃)₂CH–CH₂–NH₂','I','2-метилпропан-1-амин'],['(CH₃)₃C–NH₂','I','2-метилпропан-2-амин'],['CH₃–CH₂–CH₂–NH–CH₃','II','N-метилпропан-1-амин'],['(CH₃)₂CH–NH–CH₃','II','N-метилпропан-2-амин'],['CH₃–CH₂–NH–CH₂–CH₃','II','N-этилэтанамин'],['CH₃–CH₂–N(CH₃)₂','III','N,N-диметилэтанамин']]};
+let isoKey='C₃H₉N';const isoPick=$('#isoPick');
+function drawIso(){const rows=ISO[isoKey];const nm=shuffle(rows.map(r=>r[2]));const g=$('#isoGrid');g.innerHTML='';
+ rows.forEach((r,i)=>{const b=document.createElement('div');b.className='box';b.innerHTML=`<div class="f">${r[0]}</div><div class="row"></div>`;
+  const row=b.querySelector('.row');const a=sel('isa'+i,['I','II','III']);a.setAttribute('aria-label','Типі');const c=sel('isb'+i,nm);c.setAttribute('aria-label','Атауы');row.append(a,c);g.append(b)});
+ $('#isoRes').textContent='';
+ isoPick.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===isoKey))}
+Object.keys(ISO).forEach(k=>{const b=document.createElement('button');b.type='button';b.dataset.k=k;b.textContent=k+' ('+ISO[k].length+' изомер)';b.onclick=()=>{isoKey=k;drawIso()};isoPick.append(b)});
+drawIso();
+$('#isoCheck').onclick=()=>check(ISO[isoKey],['isa','isb'],$('#isoRes'));
+$('#isoShow').onclick=()=>{fill(ISO[isoKey],['isa','isb']);$('#isoRes').textContent=''};
+
+/* ---------- ЕББҚ К-1 ---------- */
+const K1=[['CH₃–<span class="n">N</span>H₂','I'],['CH₃–<span class="n">N</span>H–CH₃','II'],['(CH₃)₃<span class="n">N</span>','III'],['C₂H₅–<span class="n">N</span>H₂','I']];
+const k1=$('#k1');const LBL={'I':'1 радикал – біріншілік','II':'2 радикал – екіншілік','III':'3 радикал – үшіншілік'};
+K1.forEach((r,i)=>{const b=document.createElement('div');b.className='box';b.innerHTML=`<div class="f">${r[0]}</div>`;const s=document.createElement('select');s.id='k1'+i;s.setAttribute('aria-label','Типі');s.innerHTML='<option value="">—</option>'+Object.entries(LBL).map(([v,t])=>`<option value="${v}">${t}</option>`).join('');b.append(s);k1.append(b)});
+$('#k1check').onclick=()=>check(K1.map(r=>[r[0],r[1]]),['k1'],$('#k1res'));
+
+/* ---------- Рефлексия ---------- */
+['r1','r2','r3'].forEach(id=>{const t=document.getElementById(id);t.value=store.get('amin_'+id)||'';t.addEventListener('input',()=>store.set('amin_'+id,t.value))});
+const lights=document.querySelectorAll('.light');
+function setLight(v){lights.forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v))}
+setLight(store.get('amin_light'));lights.forEach(b=>b.onclick=()=>{setLight(b.dataset.v);store.set('amin_light',b.dataset.v)});
+
+/* ---------- 3D модель ---------- */
+const V=(x,y,z)=>({x,y,z}),add=(a,b)=>V(a.x+b.x,a.y+b.y,a.z+b.z),sc=(a,k)=>V(a.x*k,a.y*k,a.z*k),
+ cross=(a,b)=>V(a.y*b.z-a.z*b.y,a.z*b.x-a.x*b.z,a.x*b.y-a.y*b.x),norm=a=>{const l=Math.hypot(a.x,a.y,a.z);return sc(a,1/l)};
+function tetra(a,phase=0){const ref=Math.abs(a.y)<0.9?V(0,1,0):V(1,0,0);const e1=norm(cross(a,ref)),e2=cross(a,e1);
+ return [0,120,240].map(d=>{const p=(d+phase)*Math.PI/180;return norm(add(sc(a,1/3),sc(add(sc(e1,Math.cos(p)),sc(e2,Math.sin(p))),0.9428)))})}
+function amine(subs){const atoms=[{e:'N',p:V(0,0,0)}],bonds=[];const dirs=tetra(V(0,-1,0));
+ subs.forEach((s,i)=>{const d=dirs[i];if(s==='H'){atoms.push({e:'H',p:sc(d,1.01)});bonds.push([0,atoms.length-1])}
+  else{const c=sc(d,1.47);atoms.push({e:'C',p:c});const ci=atoms.length-1;bonds.push([0,ci]);tetra(d,60).forEach(h=>{atoms.push({e:'H',p:add(c,sc(h,1.09))});bonds.push([ci,atoms.length-1])})}});
+ return {atoms,bonds,lp:V(0,1,0)}}
+function aniline(){const atoms=[{e:'N',p:V(0,0,0)}],bonds=[];const c1=V(0,-1.40,0),ctr=V(0,-2.79,0);const ring=[];
+ for(let k=0;k<6;k++){const ang=(90-60*k)*Math.PI/180;const p=add(ctr,V(1.39*Math.cos(ang),1.39*Math.sin(ang),0));atoms.push({e:'C',p});ring.push(atoms.length-1);
+  if(k>0){atoms.push({e:'H',p:add(ctr,V(2.47*Math.cos(ang),2.47*Math.sin(ang),0))});bonds.push([atoms.length-2,atoms.length-1])}}
+ for(let k=0;k<6;k++)bonds.push([ring[k],ring[(k+1)%6]]);bonds.push([0,ring[0]]);
+ [V(0.87,0.5,0.25),V(-0.87,0.5,0.25)].forEach(d=>{atoms.push({e:'H',p:sc(norm(d),1.01)});bonds.push([0,atoms.length-1])});
+ return {atoms,bonds,lp:V(0,0.15,1),conj:true}}
+const MOLS={
+ 'NH₃':{m:amine(['H','H','H']),info:[['Типі','аммиак'],['Гибридтену','sp³'],['Пішіні','тригональды пирамида'],['Бұрыш','H–N–H ≈ 107°'],['Электрон жұбы','азотта шоғырланған'],['pKb','4,75']]},
+ 'CH₃NH₂':{m:amine(['C','H','H']),info:[['Типі','біріншілік амин'],['Гибридтену','sp³'],['Пішіні','пирамида'],['Бұрыш','≈ 107–108°'],['Электрон жұбы','азотта шоғырланған'],['pKb','3,4']]},
+ '(CH₃)₂NH':{m:amine(['C','C','H']),info:[['Типі','екіншілік амин'],['Гибридтену','sp³'],['Пішіні','пирамида'],['Бұрыш','C–N–C ≈ 112°'],['Электрон жұбы','азотта шоғырланған'],['pKb','3,3']]},
+ '(CH₃)₃N':{m:amine(['C','C','C']),info:[['Типі','үшіншілік амин'],['Гибридтену','sp³'],['Пішіні','пирамида'],['Бұрыш','C–N–C ≈ 110°'],['Электрон жұбы','азотта шоғырланған'],['pKb','4,2']]},
+ 'C₆H₅NH₂':{m:aniline(),info:[['Типі','біріншілік ароматты амин'],['Гибридтену','sp²-ге жақын'],['Пішіні','азот айналасы жазыққа жақын'],['Электрон жұбы','бензол сақинасымен түйіндескен'],['pKb','9,4 (әлсіз негіз)']]}};
+const COL={N:'#3050f8',C:'#3b3f46',H:'#f4f4f4'},RAD={N:.42,C:.38,H:.24};
+const cv=$('#cv'),ctx=cv.getContext('2d');let cur='NH₃',ay=0.6,ax=-0.35,drag=null;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pick=$('#molPick');
+Object.keys(MOLS).forEach(k=>{const b=document.createElement('button');b.type='button';b.textContent=k;b.onclick=()=>{cur=k;setMol()};pick.append(b)});
+function setMol(){pick.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.textContent===cur));
+ $('#molInfo').innerHTML=MOLS[cur].info.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('');draw()}
+function size(){const r=cv.getBoundingClientRect(),d=devicePixelRatio||1;cv.width=r.width*d;cv.height=r.height*d;ctx.setTransform(d,0,0,d,0,0);draw()}
+function rot(p){let x=p.x*Math.cos(ay)+p.z*Math.sin(ay),z=-p.x*Math.sin(ay)+p.z*Math.cos(ay);let y=p.y*Math.cos(ax)-z*Math.sin(ax);z=p.y*Math.sin(ax)+z*Math.cos(ax);return V(x,y,z)}
+function draw(){const W=cv.clientWidth,H=cv.clientHeight;ctx.clearRect(0,0,W,H);const m=MOLS[cur].m;
+ let cy=0;m.atoms.forEach(a=>cy+=a.p.y);cy/=m.atoms.length;
+ const span=Math.max(...m.atoms.map(a=>Math.hypot(a.p.x,a.p.y-cy,a.p.z)))+0.6;const S=Math.min(W,H)/(2*span)*0.95;
+ const proj=p=>{const r=rot(V(p.x,p.y-cy,p.z));const f=9/(9-r.z);return {x:W/2+r.x*S*f,y:H/2-r.y*S*f,z:r.z,f}};
+ const P=m.atoms.map(a=>proj(a.p));const items=[];
+ m.bonds.forEach(([i,j])=>items.push({z:(P[i].z+P[j].z)/2-0.01,d(){ctx.strokeStyle='#8a93a8';ctx.lineWidth=6*(P[i].f+P[j].f)/2;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(P[i].x,P[i].y);ctx.lineTo(P[j].x,P[j].y);ctx.stroke()}}));
+ m.atoms.forEach((a,i)=>items.push({z:P[i].z,d(){const p=P[i],r=RAD[a.e]*S*p.f;const g=ctx.createRadialGradient(p.x-r*.35,p.y-r*.35,r*.1,p.x,p.y,r);g.addColorStop(0,'#ffffff');g.addColorStop(.25,COL[a.e]);g.addColorStop(1,a.e==='H'?'#a9afbd':'#0d1020');ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,r,0,7);ctx.fill();
+  ctx.fillStyle=a.e==='H'?'#333':'#fff';ctx.font=`600 ${Math.max(10,r*.8)}px Golos Text,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(a.e,p.x,p.y+1)}}));
+ const lpPos=[MOLS[cur].m.lp];if(m.conj)lpPos.push(sc(m.lp,-1));
+ lpPos.forEach(d=>{const q=proj(sc(d,0.85));items.push({z:q.z,d(){const r=(m.conj?.32:.42)*S*q.f;const g=ctx.createRadialGradient(q.x,q.y,0,q.x,q.y,r);g.addColorStop(0,'rgba(80,120,255,.55)');g.addColorStop(1,'rgba(80,120,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(q.x,q.y,r,0,7);ctx.fill();
+  if(!m.conj){ctx.fillStyle='#3050f8';[-1,1].forEach(s=>{ctx.beginPath();ctx.arc(q.x+s*r*.18,q.y,Math.max(2,r*.08),0,7);ctx.fill()})}}})});
+ items.sort((a,b)=>a.z-b.z).forEach(it=>it.d())}
+cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};cv.setPointerCapture(e.pointerId);cv.style.cursor='grabbing'});
+cv.addEventListener('pointermove',e=>{if(!drag)return;ay+=(e.clientX-drag.x)*0.01;ax+=(e.clientY-drag.y)*0.01;ax=Math.max(-1.5,Math.min(1.5,ax));drag={x:e.clientX,y:e.clientY};draw()});
+const end=()=>{drag=null;cv.style.cursor='grab'};cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+new ResizeObserver(size).observe(cv);setMol();
+if(!reduce){(function loop(){if(!drag){ay+=0.006;draw()}requestAnimationFrame(loop)})()}
+})();
+</script>
+</body>
+</html>
